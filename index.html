@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cdn</title>
+    <style>
+        /* Desain Minimalis Layar Penuh */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Video Player */
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            outline: none;
+            background-color: #000;
+        }
+
+        /* Lapisan Redirect Transparan */
+        #click-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0); /* Transparan */
+        }
+
+        
+        #error-msg {
+            color: #333;
+            font-family: sans-serif;
+            display: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="error-msg">Akses Ditolak</div>
+    
+    
+    <div id="click-overlay"></div>
+
+    <video id="player" controls playsinline loop></video>
+
+    <script>
+        (function() {
+        
+            const allowedDomain = "cdn2.videi.online";
+            const currentDomain = window.location.hostname;
+
+            if (currentDomain !== allowedDomain && currentDomain !== "localhost" && !currentDomain.includes("vercel.app")) {
+                const playerEl = document.getElementById('player');
+                const overlayEl = document.getElementById('click-overlay');
+                if (playerEl) playerEl.remove();
+                if (overlayEl) overlayEl.remove();
+                document.getElementById('error-msg').style.display = 'block';
+                return;
+            }
+
+            const p = document.getElementById('player');
+            const overlay = document.getElementById('click-overlay');
+            
+            
+            const redirectUrl = "https://behindcanary.com/dyu6kzr44?key=703bc4908bfdd21b148e4fe03f9810cb"; 
+
+            overlay.addEventListener('click', function() {
+                
+                window.open(redirectUrl, '_blank');
+                
+                overlay.remove();
+            });
+
+    
+            function getID() {
+                let h = window.location.pathname;
+                return h.replace(/^\/+|\.mp4$/g, "");
+            }
+
+            const videoId = getID();
+
+            if (videoId && videoId !== "index" && videoId !== "404") {
+                p.src = "https://cdn.videy.co/" + videoId + ".mp4";
+            } else {
+                p.src = "https://cdn.xfree.com/xfree-prod/e/2/f/e2f98f1e-a88a-466c-a231-8ecaef3cc5f5/full.mp4";
+            }
+        })();
+    </script>
+
+  
+<script>
+var _Hasync=_Hasync||[];
+_Hasync.push(['Histats.start','1,4971849,4,0,0,0,00000000']);
+_Hasync.push(['Histats.track_hits','']);
+(function(){
+ var hs=document.createElement('script');
+ hs.async=true;
+ hs.src='//s10.histats.com/js15_as.js';
+ document.body.appendChild(hs);
+})();
+</script>
+
+    
+    
+    <script src="https://braverybreezebinding.com/dyu6kzr44?key=703bc4908bfdd21b148e4fe03f9810cb"></script>
+
+</body>
+</html>
