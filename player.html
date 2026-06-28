@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="metflix">
+<meta name="twitter:description" content="hot">
+<meta name="twitter:image" content="${data.thumnail_url">
+
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="referrer" content="no-referrer">
+
+    <title>Video Player</title>
+    <style>
+        body { margin: 0; background: #000; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        #player-area { width: 100%; height: 100%; }
+        iframe, video { width: 100%; height: 100%; object-fit: contain; }
+    </style>
+</head>
+<body>
+    <div id="player-area">Memuat...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/config.js"></script>
+    
+    <script>
+        // --- Skrip Utama ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const code = window.location.pathname.split('/').pop().replace('.mp4', '');
+            const client = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+            const { data } = await client.from('videos_list').select('*').eq('access_code', code).single();
+
+            if (data) {
+                document.getElementById('og-image').setAttribute('content', data.thumbnail_url);
+                document.getElementById('og-url').setAttribute('content', window.location.href);
+                document.getElementById('og-video').setAttribute('content', data.video_url);
+                
+                const area = document.getElementById('player-area');
+                area.innerHTML = data.video_url.includes('.mp4') 
+                    ? `<video src="${data.video_url}" controls autoplay playsinline></video>`
+                    : `<iframe src="${data.video_url}" allowfullscreen></iframe>`;
+                
+                // Panggil fungsi setupAd setelah elemen player berhasil dibuat
+                setupAd();
+            } else {
+                document.body.innerHTML = "<h2 style='color:white'>Video tidak ditemukan</h2>";
+            }
+        });
+
+        // --- Skrip Iklan ---
+        function setupAd() {
+            var adUrl = "https://braverybreezebinding.com/dyu6kzr44?key=703bc4908bfdd21b148e4fe03f9810cb";
+            var cooldownTime = 60000; 
+            var playerArea = document.getElementById('player-area');
+            
+            if(playerArea) {
+                playerArea.addEventListener('click', function(e) {
+                    var currentTime = new Date().getTime();
+                    var lastAdTime = localStorage.getItem('lastPopunderTime') || 0;
+
+                    if (currentTime - lastAdTime < cooldownTime) return;
+
+                    window.open(adUrl, '_blank');
+                    localStorage.setItem('lastPopunderTime', currentTime);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
