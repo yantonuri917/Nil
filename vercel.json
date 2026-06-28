@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/video/:code.mp4", "destination": "/player.html" }
+  ]
+}
